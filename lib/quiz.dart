@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:quiz_app_enhancement/data/questions.dart';
 import 'package:quiz_app_enhancement/questions_container.dart';
 import 'package:quiz_app_enhancement/results_container.dart';
+import 'package:quiz_app_enhancement/retry_container.dart';
 import 'package:quiz_app_enhancement/start_container.dart';
 
 class Quiz extends StatefulWidget {
@@ -15,6 +16,9 @@ class Quiz extends StatefulWidget {
 
 class _QuizState extends State<Quiz> {
   List<String> selectedAnswers = [];
+  var strikeCount = 0;
+  // Total allowed strikes in the quiz
+  var totalAllowedStrikes = 3;
   var activeContainer = 'start-container';
 
   void switchContainer() {
@@ -26,7 +30,18 @@ class _QuizState extends State<Quiz> {
   void chooseAnswer(String answer) {
     selectedAnswers.add(answer);
 
-    if (selectedAnswers.length == questions.length) {
+    if (answer != questions[selectedAnswers.length - 1].answers[0]) {
+      // If user selects an incorrect answer the strike count is incremented
+      setState(() {
+        strikeCount++;
+      });
+      if (strikeCount == totalAllowedStrikes) {
+        // If user has reached total allowed strikes the user is sent to the retry screen
+        setState(() {
+          activeContainer = 'retry-container';
+        });
+      }
+    } else if (selectedAnswers.length == questions.length) {
       setState(() {
         activeContainer = 'results-container';
       });
@@ -36,6 +51,7 @@ class _QuizState extends State<Quiz> {
   void restartQuiz() {
     setState(() {
       selectedAnswers = [];
+      strikeCount = 0;
       activeContainer = 'questions-container';
     });
   }
@@ -45,10 +61,20 @@ class _QuizState extends State<Quiz> {
     Widget containerWidget = StartContainer(switchContainer);
 
     if (activeContainer == 'questions-container') {
-      containerWidget = QuestionsContainer(onSelectedAnswer: chooseAnswer);
+      containerWidget = QuestionsContainer(
+        strikes: strikeCount,
+        totalStrikes: totalAllowedStrikes,
+        onSelectedAnswer: chooseAnswer,
+      );
+    }
+    if (activeContainer == 'retry-container') {
+      containerWidget = RetryContainer(onRetry: restartQuiz);
     }
     if (activeContainer == 'results-container') {
-      containerWidget = ResultsContainer(selectedAnswers, onRestart: restartQuiz);
+      containerWidget = ResultsContainer(
+        selectedAnswers,
+        onRestart: restartQuiz,
+      );
     }
 
     return MaterialApp(
