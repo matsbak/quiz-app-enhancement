@@ -22,12 +22,11 @@ class _QuestionsContainerState extends State<QuestionsContainer> {
   var currentQuestionIndex = 0;
   var strikeCount = 0;
 
-  void answerQuestion(String selectedAnswer) {
+  void answerQuestion(String selectedAnswer, String correctAnswer) {
     widget.onSelectedAnswer(selectedAnswer);
     setState(() {
       currentQuestionIndex++;
-      // TODO Not working
-      if (selectedAnswer != questions[currentQuestionIndex].answers[0]) {
+      if (selectedAnswer != correctAnswer) {
         strikeCount++;
       }
     });
@@ -64,7 +63,7 @@ class _QuestionsContainerState extends State<QuestionsContainer> {
                   return AnswerButton(
                     answerText: answer,
                     onClick: () {
-                      answerQuestion(answer);
+                      answerQuestion(answer, currentQuestion.getCorrectAnswer());
                     },
                   );
                 }),

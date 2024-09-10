@@ -1,24 +1,17 @@
 import 'package:flutter/material.dart';
 
-class StrikesContainer extends StatefulWidget {
+class StrikesContainer extends StatelessWidget {
   const StrikesContainer(this.strikes, {super.key});
 
   final int strikes;
 
-  @override
-  State<StatefulWidget> createState() {
-    return _StrikesContainerState();
-  }
-}
-
-class _StrikesContainerState extends State<StrikesContainer> {
   final totalStrikes = 3;
 
   List<Icon> generateStrikes() {
     List<Icon> strikeWidgets = [];
     // Generate strike icon widgets
-    if (widget.strikes > 0) {
-      for (var i = 0; i < widget.strikes; i++) {
+    if (strikes > 0) {
+      for (var i = 0; i < strikes; i++) {
         Icon strikeWidget = const Icon(
           Icons.close,
           color: Colors.red,
@@ -27,8 +20,8 @@ class _StrikesContainerState extends State<StrikesContainer> {
       }
     }
     // Generate non-strike icon widgets
-    if ((totalStrikes - widget.strikes) > 0) {
-      for (var i = 0; i < (totalStrikes - widget.strikes); i++) {
+    if ((totalStrikes - strikes) > 0) {
+      for (var i = 0; i < (totalStrikes - strikes); i++) {
         Icon nonStrikeWidget = const Icon(Icons.close);
         strikeWidgets.add(nonStrikeWidget);
       }
