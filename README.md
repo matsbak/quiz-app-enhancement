@@ -7,12 +7,12 @@ Assignment 1 in course
 [Flutter & Dart - The Complete Guide](https://www.udemy.com/course/learn-flutter-dart-to-build-ios-android-apps/?kw=flutter&src=sac)
 with extra features. The project is done by group 4.
 
-## Extra features
+### Extra features
 
 - Strikes
 - Retry screen
 
-## How to run
+### How to run
 
 1. Open the project folder in your preferred IDE
 2. Open an Android emulator or connect to an Android device etc.
