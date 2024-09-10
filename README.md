@@ -9,4 +9,11 @@ with extra features. The project is done by group 4.
 
 ## Extra features
 
+- Strikes
+- Retry screen
+
 ## How to run
+
+1. Open the project folder in your preferred IDE
+2. Open an Android emulator or connect to an Android device etc.
+3. Run the command ```flutter run```
