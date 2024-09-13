@@ -7,9 +7,13 @@ import 'package:quiz_app_enhancement/strikes_container.dart';
 class QuestionsContainer extends StatefulWidget {
   const QuestionsContainer({
     super.key,
+    required this.strikes,
+    required this.totalStrikes,
     required this.onSelectedAnswer,
   });
 
+  final int strikes;
+  final int totalStrikes;
   final void Function(String answer) onSelectedAnswer;
 
   @override
@@ -20,15 +24,11 @@ class QuestionsContainer extends StatefulWidget {
 
 class _QuestionsContainerState extends State<QuestionsContainer> {
   var currentQuestionIndex = 0;
-  var strikeCount = 0;
 
   void answerQuestion(String selectedAnswer, String correctAnswer) {
     widget.onSelectedAnswer(selectedAnswer);
     setState(() {
       currentQuestionIndex++;
-      if (selectedAnswer != correctAnswer) {
-        strikeCount++;
-      }
     });
   }
 
@@ -63,13 +63,15 @@ class _QuestionsContainerState extends State<QuestionsContainer> {
                   return AnswerButton(
                     answerText: answer,
                     onClick: () {
-                      answerQuestion(answer, currentQuestion.getCorrectAnswer());
+                      answerQuestion(
+                          answer, currentQuestion.getCorrectAnswer());
                     },
                   );
                 }),
               ],
             ),
-            StrikesContainer(strikeCount),
+            // Strike container containing strike icons
+            StrikesContainer(widget.strikes, widget.totalStrikes),
           ],
         ),
       ),
