@@ -17,3 +17,7 @@ with extra features. The project is done by group 4.
 1. Open the project folder in your preferred IDE
 2. Open an Android emulator or connect to an Android device etc.
 3. Run the command ```flutter run```
+
+#### Troubleshooting
+
+If the project fails to build, repeat step 3.
